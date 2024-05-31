@@ -8,11 +8,11 @@ import { ApiDataProvider } from './components/context/userContext.jsx';
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ApiDataProvider>
+     {/*  <ApiDataProvider> */}
         <App /> 
-      </ApiDataProvider>      
+      {/* </ApiDataProvider>  */}     
     </QueryClientProvider> 
-  </React.StrictMode>
+  // </React.StrictMode>
 )

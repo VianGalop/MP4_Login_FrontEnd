@@ -7,13 +7,30 @@ import github from '../assets/img/github.png'
 import gmail from '../assets/email.svg'
 import pass from '../assets/pass.svg'
 import dev from '../assets/dev.svg'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 import { ApiDataContext } from '../components/context/userContext.jsx'
+import { createLogin } from '../Api/data.js'
 
 
 export const Registration = () => {
   const navigate = useNavigate()
+  const loginMutation = useMutation({
+    mutationFn:createLogin,
+    onSuccess: () => navigate('/login/enter'),
+    onError: () => alert('Error de login')
+    });
+
+  const handleSubmit = (e) => {
+      e.preventDefault()
+      let [email, password] = e.target;
+      loginMutation.mutate({
+      email: email.value, 
+      password: password.value
+    });
+  }
+
+  /* const navigate = useNavigate()
     const {isLogged, createLogin} = useContext(ApiDataContext)
 
   const loginMutation = useMutation({
@@ -28,17 +45,19 @@ export const Registration = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
    /*  loginMutation.mutate({email,password}) */
-   const formData = new FormData(e.target)
+  /* const formData = new FormData(e.target)
     const enterLogin = Object.fromEntries(formData)
     loginMutation.mutate({
       email:enterLogin.email,
       password: enterLogin.password
     })
-
+  
   }
   useEffect(()=>{
-    if(!isLogged) navigate('/login')
-  },[])
+    if(!isLogged){
+      navigate('/login')
+    }
+  },[isLogged]) */
 
   return (
     <>
@@ -49,7 +68,7 @@ export const Registration = () => {
             <img src={dev}/>
           </div>
           <div className='m-2'>
-            <h3 className='text-[18px] font-bold font-sans mb-4 mt-4 text-[#333333]'>Join thousands of learners from around the world</h3>
+            <h3 className='text-[18px] font-bold font-sans mb-4 mt-4 text-[#333333]'>Registration</h3>
             <p className='text-sm mt-2 mb-2 font-sans text-[#333333]'>Master web development by making real-life projects. There are multiple paths for you to choose</p>
           </div>
             <form  className='m-2' onSubmit={handleSubmit}>
@@ -71,7 +90,8 @@ export const Registration = () => {
             <img src={twitter}/>
             <img src={github}/>            
           </div>
-          <p className='flex-row mx-auto w-full text-center text-[14px] text-[#828282] mt-4 mb-4'>Adready a member? <a className='text-blue-600  '>Login</a></p>
+          <p className='flex-row mx-auto w-full text-center text-[14px] text-[#828282] mt-4 mb-4'>Adready a member?  <Link to="/login/enter" className="text-blue-500">Login</Link>
+          </p>
         </div>
       </div>
       <div className='flex flex-row  w-[360px] mx-auto text-center justify-between'>
@@ -84,4 +104,3 @@ export const Registration = () => {
 
   )
 }
-

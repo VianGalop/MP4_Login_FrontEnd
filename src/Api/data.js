@@ -1,42 +1,33 @@
-/* import axios from 'axios';
+import axios from 'axios';
 
-const  API_URL = axios.create({
-    baseURL: 'http://localhost:3000/login',   
-})
-
-/* export const sendLogin = async ({email, password}) =>{
-    const res = await API_URL.post(`${API_URL}/enter`,{ email,
-        password})
-    console.log('la res',res.data)
-    return res.data
-} */
-/* export const sendLogin = async ({email, password}) =>{
-    axios.post('http://localhost:3000/login', {
-        email,
-        password
-    })
-    .then(response => {
-        console.log(response.data);
-        localStorage.setItem('dataUser',JSON.stringify(response.data))
-    })
-    .catch(error => {
-        console.error('Error al iniciar sesión:', error);
-    });
+export const sendLogin = async ({email, password}) =>{
+    const responses = await axios.post('http://localhost:3000/login/enter', {email, password})
+    if(responses.status !== 200){
+        return alert('credenciales invalidas')
+    } 
+    return responses.data
 }
 
-
-export const createLogin = () =>{
-    API_URL.post('/create')
-
+export const createLogin = async ({email, password}) =>{
+    const res = await axios.post('http://localhost:3000/login', {email, password})
+   /*  if(res.status !== 200){
+        return alert('credenciales invalidas')
+    } */
+    //localStorage.setItem('token', JSON.stringify(res.data))
 }
 
-export const getPerfil = async () =>{
-     API_URL.get('/registration/see')
-        //localStorage.setItem('userLogin', JSON.stringify(res.data)); 
+export const getPerfil = async (id) =>{
+    const responses = await axios.get(`http://localhost:3000/perfil/see/${id}`)
+    if(responses.status !== 200){
+        return alert('No existe informacion')
+    } 
+    return responses.data
 }
-export const createPerfil = () =>{
-    API_URL.post('/registration/datePerfil')
 
+export const getPerfil = async (id) =>{
+    const responses = await axios.get(`http://localhost:3000/perfil/see/${id}`)
+    if(responses.status !== 200){
+        return alert('No existe informacion')
+    } 
+    return responses.data
 }
- */
-

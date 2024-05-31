@@ -1,10 +1,12 @@
 import { Navbar } from '../components/Navbar'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ApiDataContext } from '../components/context/userContext.jsx'
+import { useMutation } from '@tanstack/react-query'
+import { Link, useNavigate } from 'react-router-dom'
+import { getPerfil } from '../Api/data.js'
 
 export const DataPerfil = () => {
   const {userData} = useContext(ApiDataContext)
-  const dataStorage = localStorage.getItem('dataUser')
 
   return (
     <>
@@ -21,7 +23,10 @@ export const DataPerfil = () => {
               <p className="text-sm text-[#828282]">Some info may be visible to other people</p>
             </div>         
             <spa className='w-[500px] grid grid-row place-content-around'>
-              <button type="button" className="inline-block rounded-full border-2 px-6 pb-[6px] pt-2 text-xs font-medium leading-normal text-primary-700  text-[#828282]">Edit</button>
+              <button type="button" className="inline-block rounded-full border-2 px-6 pb-[6px] pt-2 text-xs font-medium leading-normal text-primary-700  text-[#828282]">
+                <Link to='/perfil/updated'>Edit</Link>
+              </button>
+              
             </spa>            
           </div>
           <div className="flex flex-row py-4 justify-around border-b-[1px] ">
@@ -33,34 +38,34 @@ export const DataPerfil = () => {
           <div className="flex flex-row py-4 justify-around border-b-[1px]">
             <label className=" text-xs text-[#BDBDBD] w-[300px] ml-7">NAME</label>
             <span className="w-[500px] ml-0">
-              <p>Xanthe Neal</p>
+              <p>{userData.name? userData.name:''}</p>
             </span>            
           </div>
 
           <div className="flex flex-row py-4  justify-around border-b-[1px]">
             <label className=" text-xs text-[#BDBDBD] w-[300px] ml-7">BIO</label>
             <span className="w-[500px] ml-0">
-              <p>I am a software developer and a big fan of devchallenges am a software developer and a big fan of devchallenges...</p>
+              <p>{userData.biography? userData.biography:''}</p>
             </span>     
           </div> 
 
           <div className="flex flex-row py-4  justify-around border-b-[1px]">
             <label className=" text-xs text-[#BDBDBD] w-[300px] ml-7">PHONE</label>
             <span className="w-[500px] ml-0">
-              <p>908249274292</p>
+              <p>{userData.phone? userData.phone:''}</p>
             </span>    
           </div> 
 
           <div className="flex flex-row py-4 justify-around border-b-[1px]">
             <label className=" text-xs text-[#BDBDBD] w-[300px] ml-7">EMAIL</label>
             <span className="w-[500px] ml-0">
-              <p>email@gmail.com</p>
+            <p>{userData.email? userData.email:''}</p>   
             </span>    
           </div> 
           <div className="flex flex-row py-4 justify-around">
             <label className=" text-xs text-[#BDBDBD] w-[300px] ml-7">PASSWORD</label>
             <span className="w-[500px] ml-0">
-              <p>***********</p>
+              <p>{userData.password? '********':'**********'}</p>   
             </span>   
           </div> 
         </div>

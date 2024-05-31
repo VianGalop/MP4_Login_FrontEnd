@@ -1,51 +1,40 @@
+import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { createContext, useEffect, useState } from 'react'
+import { getPerfil } from '../../Api/data'
 
 const ApiDataContext = createContext()
 
 export const ApiDataProvider = ({children}) => {
 
-  const [userData, setUserData] = useState()
+  const [userData, setUserData] = useState({})
   const [isLogged, setIsLogged] = useState(false)
     
-  const enterLogin = async ({ email, password }) => {
-    const res = await axios.post('http://localhost:3000/login/enter', {
-        email,
-        password,
-    });
-
-    setUserData(res.data.data)
-    localStorage.setItem('token', JSON.stringify(res.data.token));
-    setIsLogged(true)
-  };
-  
-  const createLogin = async({email, password}) =>{
-      const response = await axios.post('http://localhost:3000/login/create', {
-          email,
-          password,
-      });
-
-      setUserData(response.data.data)
-      localStorage.setItem('token', JSON.stringify(response.data.token));
-      setIsLogged(true)
-  };
+  const loginMutation = useMutation({
+    mutationFn:getPerfil,
+    onSuccess: (datos) => {
+      setIsLogged(datos.token)
+      if(datos.token){
+        setIsLogged(true)
+        setUserData(datos)
+      }
+    },
+    onError: () => alert('Error de login')
+  });
 
   useEffect(()=>{
-    if (userData) {
-      setIsLogged(true)
-    }
-  },[userData])
+    loginMutation();
+  },[])
 
 
   return (
     <ApiDataContext.Provider 
-    value = {{ 
-      enterLogin, 
+    value = {{
       userData, 
-      setUserData, 
+      setUserData,
       isLogged, 
-      setIsLogged, 
-      createLogin}
+      setIsLogged 
+      }
     }>
         {children}
     </ApiDataContext.Provider>

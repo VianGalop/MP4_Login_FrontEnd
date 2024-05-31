@@ -6,19 +6,18 @@ import { useContext, useEffect } from 'react';
 
 export const Navbar = () => {
 
-  const dataStorage = localStorage.getItem('dataUser')
-  const {userData} = useContext(ApiDataContext)
+  const dataStorage = localStorage.getItem('token')
   const navigate = useNavigate();
   
   useEffect(()=>{
     if(!dataStorage){
-      navigate('/login')
+      navigate('/login/enter')
     }
   },[dataStorage, navigate])
 
   const hadleOut = () =>{
-    localStorage.removeItem('dataUser')
-    navigate('/login')
+    localStorage.removeItem('token')
+    navigate('/login/enter')
   }
 
   return (

@@ -7,39 +7,37 @@ import github from '../assets/img/github.png'
 import gmail from '../assets/email.svg'
 import pass from '../assets/pass.svg'
 import dev from '../assets/dev.svg'
-import { useNavigate } from 'react-router-dom'
-import { useContext, useEffect } from 'react'
-import { ApiDataContext } from "../components/context/userContext.jsx"
+import { Link} from 'react-router-dom'
+import { useNavigate } from 'react-router'
+/* import { useContext, useEffect } from 'react'
+import { ApiDataContext } from "../components/context/userContext.jsx" */
+import { sendLogin } from '../Api/data.js'
 
 export const Login = () => {
-  
-  const navigate = useNavigate()
-  const { isLogged, enterLogin } = useContext(ApiDataContext )
 
+  const navigate = useNavigate()
+  
   const loginMutation = useMutation({
-    mutationFn:enterLogin,
-    onSuccess: () =>{ 
-      navigate('/perfil/see')
-      console.log('Login exitoso:');       
+    mutationFn:sendLogin,
+    onSuccess: (data) => {
+      localStorage.setItem('token',data.token)
+      navigate(`/perfil/see/${data.id}`)
     },
-    onError: (error) => alert('Error de login:',error.message)
+    onError: () => alert('Error de login')
     });
 
   const handleSubmit = (e) => {
     e.preventDefault()
-   /*  loginMutation.mutate({email,password}) */
-   const formData = new FormData(e.target)
-    const enterLogin = Object.fromEntries(formData)
-    loginMutation.mutate({
-      email:enterLogin.email,
-      password: enterLogin.password
-    })
-
+   let [email, password] = e.target;
+   loginMutation.mutate({
+    email: email.value, 
+    password: password.value
+  });
   }
-  useEffect(()=>{
+  /* useEffect(()=>{
     if(!isLogged) navigate('/login/create')
   },[isLogged])
-
+ */
   return (
     <>
     <div className="container w-full h-screen flex flex-col items-center justify-center  ">
@@ -55,11 +53,11 @@ export const Login = () => {
             <form  className='m-2' onSubmit={handleSubmit}>
               <div className=' flex flex-row border-2 h-10 rounded-md mb-4 mt-4'>
                 <img className='w-4 ml-2 mr-2' src={gmail}/>              
-                <input type='email' name='email' placeholder="Email" className='w-full focus:outline-none'/>
+                <input type='email' name='email' id='email' placeholder="Email" className='w-full focus:outline-none'/>
               </div>
               <div className=' flex flex-row border-2 h-10 rounded-md'>
                 <img className='w-4 ml-2 mr-2' src={pass}/>              
-                <input type='password' name='password' placeholder="Password" className='w-full focus:outline-none'/>
+                <input type='password' name='password' id='password'placeholder="Password" className='w-full focus:outline-none'/>
               </div>
               <button type="submit" className='mb-4 mt-4 block w-full rounded-md bg-blue-600 px-6 pb-2 pt-2.5 text-sm font-sans leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out'>Start coding now</button>
             </form>
@@ -71,7 +69,9 @@ export const Login = () => {
             <img src={twitter}/>
             <img src={github}/>            
           </div>
-          <p className='flex-row mx-auto w-full text-center text-[14px] text-[#828282] mt-4 mb-4'>Adready a member? <a className='text-blue-600  '>Login</a></p>
+          <p className='flex-row mx-auto w-full text-center text-[14px] text-[#828282] mt-4 mb-4'>Adready a member? 
+          <Link to="/login" className="text-blue-500">Register</Link>
+          </p>
         </div>
       </div>
       <div className='flex flex-row  w-[360px] mx-auto text-center justify-between'>

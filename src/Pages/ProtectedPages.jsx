@@ -6,7 +6,7 @@ export const ProtectedPages = () => {
 
   const { isLogged } = useContext(ApiDataContext)  
 
-  if(!isLogged) return <Navigate to="/login" replace />
+  if(!isLogged) return <Navigate to="/login/enter" replace />
 
   return (
     <Outlet/>

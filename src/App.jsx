@@ -11,11 +11,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login /> } />
-          <Route path="/login/create" element={ <Registration /> } />
+          <Route path="/login" element={<Registration /> } />
+          <Route path="/login/enter" element={ <Login /> } />
           <Route element={<ProtectedPages/>}>
-            <Route path="/perfil/see" element={ <DataPerfil /> } />
-            <Route path="/perfil/data" element={ <NewPerfil /> } />  
+            <Route path="/perfil/see/:id" element={ <DataPerfil /> } />
+            <Route path="/perfil/updated/:id" element={ <NewPerfil /> } />  
           </Route>          
         </Routes>  
       </BrowserRouter>     
