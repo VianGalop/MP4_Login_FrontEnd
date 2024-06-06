@@ -24,7 +24,7 @@ export const getPerfil = async (id) =>{
     return responses.data
 }
 
-export const getPerfil = async (id) =>{
+export const updatedPerfil = async (id) =>{
     const responses = await axios.get(`http://localhost:3000/perfil/see/${id}`)
     if(responses.status !== 200){
         return alert('No existe informacion')

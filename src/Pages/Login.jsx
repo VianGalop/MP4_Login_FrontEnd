@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {useMutation} from '@tanstack/react-query'
 import google from '../assets/img/google.png'
 import facebook from '../assets/img/facebook.png'
@@ -9,13 +9,13 @@ import pass from '../assets/pass.svg'
 import dev from '../assets/dev.svg'
 import { Link} from 'react-router-dom'
 import { useNavigate } from 'react-router'
-/* import { useContext, useEffect } from 'react'
-import { ApiDataContext } from "../components/context/userContext.jsx" */
 import { sendLogin } from '../Api/data.js'
+import { ApiDataContext } from '../components/context/userContext.jsx'
 
 export const Login = () => {
+/* const { setIsLogged} = useContext(ApiDataContext) */
 
-  const navigate = useNavigate()
+  const navigate = useNavigate() 
   
   const loginMutation = useMutation({
     mutationFn:sendLogin,
@@ -24,7 +24,7 @@ export const Login = () => {
       navigate(`/perfil/see/${data.id}`)
     },
     onError: () => alert('Error de login')
-    });
+    }); 
 
   const handleSubmit = (e) => {
     e.preventDefault()
