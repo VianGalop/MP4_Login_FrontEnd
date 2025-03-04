@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 export const ProtectedPages = () => {
 
-  const { isLogged } = useContext(ApiDataContext)  
+  const { isLogged } = ApiDataContext()  
 
   if(!isLogged) return <Navigate to="/login/enter" replace />
 

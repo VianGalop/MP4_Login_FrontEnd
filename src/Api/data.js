@@ -10,9 +10,9 @@ export const sendLogin = async ({email, password}) =>{
 
 export const createLogin = async ({email, password}) =>{
     const res = await axios.post('http://localhost:3000/login', {email, password})
-   /*  if(res.status !== 200){
+    if(res.status !== 200){
         return alert('credenciales invalidas')
-    } */
+    }
     //localStorage.setItem('token', JSON.stringify(res.data))
 }
 

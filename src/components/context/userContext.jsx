@@ -8,25 +8,16 @@ const ApiDataContext = createContext()
 
 export const ApiDataProvider = ({children}) => {
 
-  const [userData, setUserData] = useState({})
-  const [isLogged, setIsLogged] = useState(false)
-    
-  /* const loginMutation = useMutation({
-    mutationFn:getPerfil,
-    onSuccess: (datos) => {
-      setIsLogged(datos.token)
-      if(datos.token){
-        setIsLogged(true)
-        setUserData(datos)
-      }
-    },
-    onError: () => alert('Error de login')
-  });
+  const userData = localStorage.getItem('user');
+  let data = null;
 
-  useEffect(()=>{
-    loginMutation();
-  },[]) */
-  
+  if (userData) {
+    data = JSON.parse(userData);
+  }
+
+  const [user, setUser] = useState(data);
+ /*  const [userData, setUserData] = useState({})
+  const [isLogged, setIsLogged] = useState(false) */
 
   const navigate = useNavigate()  
   
@@ -37,6 +28,7 @@ export const ApiDataProvider = ({children}) => {
         setUserData()
       }
       localStorage.setItem('token',data.token)
+      setIsLogged(true)
       navigate(`/perfil/see/${data.id}`)
     },
     onError: () => alert('Error de login')

@@ -6,8 +6,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getPerfil } from '../Api/data.js'
 
 export const DataPerfil = () => {
-  const {userData} = useContext(ApiDataContext)
-
+/*   const {userData} = useContext(ApiDataContext)
+ console.log(userData); */
   return (
     <>
       <Navbar/>
